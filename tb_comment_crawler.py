@@ -11,10 +11,10 @@ from lxml import etree
 
 # Redis 连接配置
 redis_client = redis.Redis(
-    host='localhost',
+    host='110.40.130.64',
     port=6379,
     db=0,
-    password='your_Redis_password',
+    password='hell0Passw0rd',
     decode_responses=True
 )
 
@@ -106,7 +106,12 @@ async def fetch_comments(session, item_id, page):
                     'page': page,
                     'comment': comment
                 }
-                redis_client.set(f"{item_id}:{page}:{comment_hash}", json.dumps(comment_data))
+                try:
+                    redis_client.set(f"{item_id}:{page}:{comment_hash}", json.dumps(comment_data))
+                except:
+                    import traceback
+                    traceback.print_exc()
+                    continue
                 print(f"商品ID {item_id} 第{page}页评论存储到Redis: {comment}")
                 comments.append(comment)
         return comments
@@ -141,7 +146,10 @@ def scrape_taobao_item_ids(pages=3):
 
     browser.close()
     # 将 item_id 列表存储到 Redis，键名为 all_id
-    redis_client.set('all_id', json.dumps(id_list))
+    try:
+        redis_client.set('all_id', json.dumps(id_list))
+    except:
+        pass
     print(f"抓取到的商品ID列表已存储到 Redis!")
     return id_list
 

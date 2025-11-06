@@ -3,10 +3,10 @@ import json
 
 # Redis 连接配置
 redis_client = redis.Redis(
-    host='localhost',
+    host='110.40.130.64',
     port=6379,
     db=0,
-    password='123456',
+    password='hell0Passw0rd',
     decode_responses=True
 )
 
