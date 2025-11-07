@@ -4,3 +4,4 @@ DrissionPage
 redis
 lxml
 jieba
+flask

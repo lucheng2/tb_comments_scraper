@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品详情 - {{ product_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>商品评论分析 - {{ product_name }}</h1>
+        <div class="navigation">
+            <a href="/" class="nav-button">返回商品列表</a>
+            <a href="/chart?product_id={{ product_id }}" class="nav-button secondary">查看饼图</a>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>评论总数</h3>
+                <p class="stat-number">{{ reviews|length }}</p>
+            </div>
+            <div class="stat-card positive">
+                <h3>正面评论</h3>
+                <p class="stat-number">{{ reviews|selectattr("sentiment", "equalto", "正面")|list|length }}</p>
+            </div>
+            <div class="stat-card neutral">
+                <h3>中性评论</h3>
+                <p class="stat-number">{{ reviews|selectattr("sentiment", "equalto", "中性")|list|length }}</p>
+            </div>
+            <div class="stat-card negative">
+                <h3>负面评论</h3>
+                <p class="stat-number">{{ reviews|selectattr("sentiment", "equalto", "负面")|list|length }}</p>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="reviews-table">
+                <thead>
+                    <tr>
+                        <th>评论内容</th>
+                        <th>情感得分</th>
+                        <th>情感倾向</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for review in reviews %}
+                    <tr class="sentiment-{{ review.sentiment }}">
+                        <td class="review-text">{{ review.text }}</td>
+                        <td>
+                            <span class="score-badge score-{{ review.score }}">
+                                {{ review.score }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="sentiment-badge sentiment-{{ review.sentiment }}">
+                                {{ review.sentiment }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="info">
+            <p>当前查看的商品ID: <strong>{{ product_id }}</strong> - {{ product_name }}</p>
+        </div>
+    </div>
+</body>
+</html>

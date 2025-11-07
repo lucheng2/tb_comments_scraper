@@ -1,0 +1,259 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+h1 {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    margin-bottom: 20px;
+}
+
+/* 表格样式 */
+.table-container {
+    padding: 20px;
+}
+
+.products-table, .reviews-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.products-table th, .reviews-table th {
+    background-color: #f8f9fa;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.products-table td, .reviews-table td {
+    padding: 15px;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.products-table tr:last-child td, .reviews-table tr:last-child td {
+    border-bottom: none;
+}
+
+.products-table tr:hover {
+    background-color: #f8f9fa !important;
+    transition: background-color 0.3s ease;
+}
+
+/* 操作按钮 */
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-chart {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.btn-detail {
+    background: linear-gradient(135deg, #4BC0C0 0%, #20B2AA 100%);
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 导航按钮 */
+.navigation {
+    padding: 0 20px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+}
+
+.nav-button.secondary {
+    background: linear-gradient(135deg, #4BC0C0 0%, #20B2AA 100%);
+}
+
+.nav-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 统计卡片 */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border-left: 4px solid #667eea;
+}
+
+.stat-card.positive {
+    border-left-color: #28a745;
+}
+
+.stat-card.neutral {
+    border-left-color: #ffc107;
+}
+
+.stat-card.negative {
+    border-left-color: #dc3545;
+}
+
+.stat-card h3 {
+    margin-bottom: 10px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 评论表格样式 */
+.review-text {
+    max-width: 500px;
+    line-height: 1.5;
+}
+
+.score-badge, .sentiment-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.score-1, .sentiment-正面 {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.score-0, .sentiment-中性 {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.score--1, .sentiment-负面 {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.sentiment-正面 td:first-child {
+    border-left: 4px solid #28a745;
+}
+
+.sentiment-中性 td:first-child {
+    border-left: 4px solid #ffc107;
+}
+
+.sentiment-负面 td:first-child {
+    border-left: 4px solid #dc3545;
+}
+
+/* 图表容器 */
+.chart-container {
+    position: relative;
+    height: 400px;
+    padding: 20px;
+}
+
+/* 信息区域 */
+.info {
+    padding: 20px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+}
+
+.info p {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 300px;
+    }
+
+    h1 {
+        font-size: 24px;
+        padding: 20px;
+    }
+
+    .products-table th,
+    .products-table td,
+    .reviews-table th,
+    .reviews-table td {
+        padding: 10px;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .btn {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .navigation {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪分布</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="chart-title">情绪分布饼图</h1>
+        <div class="navigation">
+            <a href="/" class="nav-button">返回商品列表</a>
+        </div>
+        <div class="chart-container">
+            <canvas id="pieChart"></canvas>
+        </div>
+        <div class="info">
+            <p>当前查看的商品ID: <span id="current-product-id">{{ product_id }}</span></p>
+        </div>
+    </div>
+
+    <script>
+        // 获取URL参数中的商品ID
+        function getProductIdFromUrl() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('product_id') || 'P001';
+        }
+
+        // 获取数据并渲染图表
+        function loadChartData() {
+            const productId = getProductIdFromUrl();
+
+            fetch(`/api/chart-data?product_id=${productId}`)
+                .then(response => response.json())
+                .then(data => {
+                    // 更新标题
+                    document.getElementById('chart-title').textContent =
+                        `${data.product_name || '商品'}评论情绪分布`;
+
+                    // 更新当前商品ID显示
+                    document.getElementById('current-product-id').textContent = productId;
+
+                    // 渲染图表
+                    const ctx = document.getElementById('pieChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'pie',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                data: data.data,
+                                backgroundColor: data.colors,
+                                borderWidth: 2,
+                                borderColor: '#fff'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'right',
+                                },
+                                tooltip: {
+                                    callbacks: {
+                                        label: function(context) {
+                                            const label = context.label || '';
+                                            const value = context.raw || 0;
+                                            const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                            const percentage = Math.round((value / total) * 100);
+                                            return `${label}: ${value} (${percentage}%)`;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error loading chart data:', error));
+        }
+
+        // 页面加载时执行
+        document.addEventListener('DOMContentLoaded', loadChartData);
+    </script>
+</body>
+</html>

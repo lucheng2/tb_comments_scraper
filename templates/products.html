@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品列表</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>商品列表</h1>
+        <div class="table-container">
+            <table class="products-table">
+                <thead>
+                    <tr>
+                        <th>商品ID</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.id }}</td>
+                        <td class="actions">
+                            <button class="btn btn-chart" onclick="goToChart('{{ product.id }}')">
+                                饼图
+                            </button>
+                            <button class="btn btn-detail" onclick="goToDetail('{{ product.id }}')">
+                                详情
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="info">
+            <p>点击"饼图"查看情绪分布，点击"详情"查看商品评论分析</p>
+        </div>
+    </div>
+
+    <script>
+        function goToChart(productId) {
+            window.location.href = `/chart?product_id=${productId}`;
+        }
+
+        function goToDetail(productId) {
+            window.location.href = `/detail?product_id=${productId}`;
+        }
+
+        // 为表格行添加悬停效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const rows = document.querySelectorAll('.products-table tbody tr');
+
+            rows.forEach(row => {
+                row.addEventListener('mouseenter', function() {
+                    this.style.backgroundColor = '#f8f9fa';
+                });
+
+                row.addEventListener('mouseleave', function() {
+                    this.style.backgroundColor = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
